@@ -68,6 +68,12 @@ func (evt *Event) UnmarshalJSON(payload []byte) error {
 				visiterr = fmt.Errorf("invalid 'sig' field: %w", err)
 			}
 			evt.Sig = string(id)
+		case "ots":
+			ots, err := v.StringBytes()
+			if err != nil {
+				visiterr = fmt.Errorf("invalid 'ots' field: %w", err)
+			}
+			evt.extra[key] = string(ots)
 		default:
 			var anyValue any
 			json.Unmarshal(v.MarshalTo(nil), anyValue)
